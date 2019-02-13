@@ -1,0 +1,96 @@
+项目管理：
+1.关于类库的管理（jar包导入）
+2.项目构建（打包发布）
+3.项目的标准结构
+
+
+windows找PID命令：netstat -ano | findstr "6666"
+
+windows强制终止进程：taskkill /F /pid 5736
+
+
+pom.xml---Maven的配置文件
+src--放置所有源代码和测试代码
+   --mian --源文件
+        - java--
+   --test  -测试代码
+
+
+1.Maven项目的构建
+1）通过命令行构建
+
+mvn -B archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.1  
+-DgroupId=com.bittech.hello -DartifactId=hello-app -Dversion=1.0.0
+
+mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.1
+
+
+2）使用开发工具IDEA
+
+2.Maven中的三个关键配置
+groupId：项目所属公司或组织名称---用于后续包定义
+artificid：项目名称
+Version：项目版本号
+
+3.pom.xml中的关键配置
+
+<dependencies>
+   <!配置所有项目需要的第三方得jar包>
+</dependencies>
+
+
+<dependencies>
+  <dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <version>4.11</version>
+    <scope>test</scope>
+  </dependency>
+</dependencies>
+ 
+在</dependencies>内部导入第三方jar包，每个jar包都对应一个</dependency>标签。通过groupId ,artifactId,version来指定不同的jar包
+
+4.Maven说明周期
+
+4.1compile：
+mvn complie  (*.java  -> *.class)
+
+4.2clean--清空target目录
+mvn clean  
+
+4.3test --执行测试用例
+mvn  test
+
+4.4package --将项目打包
+
+mvn package
+打包生成的结果（jar默认。war） 命名按照artifactId-Version来命名
+
+在执行package将项目打包过程中会默认执行test命令运行所有测试用例，只有当所有测试用例通过项目才会打包成功。
+
+mvn -DskipTests package：打包过程中不在执行测试代码直接将项目打包
+
+构建可执行jar：
+1.在pom.xml中添加插件来打包并指明主类来使得生成的jar具备可执行能力
+2.使用mvn package将项目打包
+3.java -jar 打包后的jar
+
+4.5install--安装构件到本地仓库
+mvn install  
+将项目打包放置在本地仓库，本机中的其他项目可以使用dependency来引用次项目
+
+Maven寻找jar顺序：先在本地仓库查找是否存在，若不存在区中央仓库（网上）寻找，如果中央仓库中都没有找到报错。
+
+匹配jar包的规则：根据pom 中文件的指定dependency中的三个关键配置（groupId-->artifactId-->Version）
+
+4.6 depoly--安装构件到中央仓库
+
+4.7 site  --生成网站
+mvn  site
+将项目信息，依赖等生成到项目网站
+
+
+Maven重点掌握
+1.重点掌握IDEA创建Maven项目
+2.使用pom文件添加依赖
+3.会使用构件打包jar文件
