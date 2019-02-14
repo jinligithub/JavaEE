@@ -1,0 +1,59 @@
+1.JDBC驱动程序
+
+
+步骤：
+交互
+遍历文件并且存到数据库
+进行检索
+
+功能：
+检索文件信息：文件名模糊检索，文件名模糊检索+文件类型，最近检索文件
+
+索引文件信息：文件系统 监听，全量检索+自定义目录
+
+技术：
+java文件操作
+Database（嵌入式的H2数据库，或MySQL数据库）
+JDBC
+Lombok库（IDEA插件）
+java多线程
+文件系统监控（Apache Commons IO）
+
+实现：
+目标
+1.搭建Maven项目
+2.配置pom
+3.创建包（按功能分类）
+4.创建入口程序
+5.简单的公共代码开发
+
+H2是一个java数据库
+速度快，开源，他还是JDBC的API，
+in-memory。把数据存到内存，操作速度快
+
+
+1.Git创建仓库
+2.本地项目中  git init 
+3.本地项目中创建 。gitignore添加不加入版本管理的目录和文件
+4.git add .->git commit -message
+
+
+
+基本模型类抽象
+文件类型：png,doc,pdt,ppt,jar,jpeg,zip,rar,txt,sh,msi,
+索引file的属性之后的信息  Thing
+检索的参数（条件）-Condition
+
+设计数据库表
+创建数据库（everything-）
+设计数据库表（Thing 类创建的对象属性）
+
+
+数据库编程（DAO）
+创建数据库源（dataSource）-依赖Druid数据库连接池
+执行数控脚本（初始化数据库）
+
+
+
+
+
