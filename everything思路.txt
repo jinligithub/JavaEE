@@ -88,5 +88,24 @@ C：\（路径）
 
 
 StringBuffer和StringBuilder
+
+
+
+数据源的初始化：单例+工厂模式--->数据源的 初始化，以及数据源脚本的执行
+为什么要用工厂模式
+
+1.构件java对象，本来java对象是直接new一个对象，但是有一个问题：你可以反复去new对象，
+但是这意味着对象在堆上占用的空间特别多。但是数据源的对象不需要反复去实例化对象，
+因为连接的是一个数据库，没有必要去反复实例化数据源对象
+2.这个工厂模式初始化的数据源是一个单对象，而且工厂类不会让用户随便去实例化对象，让工厂类成为天然的单例
+
+何如读取项目里的数据文件
+
+
+InputStream in =DataSourceFactory.class.getClassLoader().
+getResourceAsStream("simple_everything");
+
+有了InputSteam后，就可以吧Connection创建命令，执行就行InputStream流读取过来，
+之后把它变成字符串，变成字符串后就可以获取SQL语句，然后执行语句 
 StringBuffer保证了线程安全，不会被多线程共享，
 
