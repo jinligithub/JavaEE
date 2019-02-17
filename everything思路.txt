@@ -107,5 +107,125 @@ getResourceAsStream("simple_everything");
 
 有了InputSteam后，就可以吧Connection创建命令，执行就行InputStream流读取过来，
 之后把它变成字符串，变成字符串后就可以获取SQL语句，然后执行语句 
+
+
+检索
+1.数据库的初始化操作
+2.数据库的访问工作（使用DataSource）
+3.实现检索业务
+
+DataSourceFactory是一个工厂模式加单例模式
+它是一个私有的意味着别人不可以实例化对象，但是可以调用这个类的静态方法dataSource（）就可以获取到数据源，但是这里又组合了单例模式
+private static volatile DruidDataSource dataSource;
+而且单例采用了双重检查，这样可以保证多线程情况下线程任然是一个不会出现线程竞争的问题
+
+采用的是h2数据库，所以只需要设置一个数据库的驱动名称就好
+
+dataSource.setDriverClassName("org.h2.Driver")
+它是如何通过字符串就可以实例化一个driver对象：通过反射做到的，通过一个类的权限类提供的默认构造方法，我就可以提供反射来实例化一个反射对象
+
+h2是一个嵌入式数据库，他的内容在本地存储，所以他不需要用户名和密码
+
+JDBC  中必须提供一个Driver class 实现了javaAPI规范的driver类
+
+
+JDBC规范中关于MySQL的Url：
+jdbc:mysql://ip:port/database
+
+
+
+JDBC规范中关于 h2的Url：
+嵌入式的时候使用
+jdbc:h2:filepath->存储到本地文件    绝对路径
+jdbc:h2:~/filepath->存储到当前用户的home目录      不是绝对路径
+存储到服务器使用：
+jdbc :h2://ip:port/databaseName-->存储到服务器
+
+获取数据源需要：Driver和Url
+
+索引信息需要存储到数据库里面去，所以需要初始化数据库，
+获取数据源
+获取SQL语句
+获取数据库连接和名称执行SQL
+
+resource下的.sql文件也在target目录下的Classes目录下
+要读取.sql文件可以通过绝对路径来读取，可以通过file的输入和输出流肯定可以读到，
+也可以通过读取classpath下的文件，因为当前resource文件下的simple_everything.sql已经存在了。读取方法：把它当作一个类去 读，然后可以通过classLoad去加载。
+获取classLoad的方法：DataSourceFactory.class.getClassLoader().getResourceAsStream("simple_everything");
+
+DataSourceFactory.class：获得class对象
+DataSourceFactory.class.getClassLoader()：获取到当前类的加载器
+DataSourceFactory.class.getClassLoader().getResourceAsStream：把资源文件读取了，并且转化为stream流，
+
+* 不采取绝对路径文件 ：因为当把项目发送给别人路径就发生了改变
+* E:\JAVA\simple-everything\src\main\resources\simple_everything.sql
+*
+* 采取读取classpath文件下的路径：因为当前resource文件下的simple_everything.sql已经存在了
+*/
+
+输入流如何转化为SQL语句：IO流的处理方式
+BufferedReader reader= new BufferedReader(new InputStreamReader(in)
+
+读取内容：reader里有一个readLine（）方法一行一行的读取
+因为有注释，所以用startWith（“--”）判断开头是不是注释。
+
+JDBC编程
+驱动加载
+1.获取数据库连接
+// Connection connection= dataSource.getConnection();
+Connection connection = dataSource.getConnection();
+2.//创建命令
+PreparedStatement statement=connection.prepareStatement(sql);
+3.//执行SQL语句
+statement.execute();
+4.//关闭连接，流
+connection.close();
+statement.close();
+
+
+
+
+不用创建数据库，因为在H2指定数据源时已经指定了一个数据库，
+-- 因为h2是嵌入式的它会呈现在本地文件中所以这里不需要单独创建数据库。但是MySQL需要
+
+-- 创建数据库
+-- create database if not exists simple_everything;
+--  
+-- 创建数据库表
+drop table if exists file_index;
+create table if not exists file_index(
+  name varchar(256) not null comment'文件名称',
+  path varchar(1024) not null comment'文件路径',
+  depth int not null comment'文件路径深度',
+  file_type varchar(32)  not null comment '文件类型'
+);
+
+被final修饰的属性初始化方式：
+立即初始化
+构造方法初始化
+构造快初始化
+
+
+查询文件的深度：
+可以选择深度最小的，也可以选择深度较深的
+
+为什么用StringBuilder而不用StringBuffer?
+StringBuilder sqlBuilder=new StringBuilder();--》
+因为StringBuffer是线程安全的，该方法在虚拟机里的方法栈上是线程独享的，当别的线程再次调用StringBuffer时会再new一个StringBuffer,而且StringBuffer的方法作用域在方法里面，离开 这个方法之后StringBuffer就会被销毁，所以StringBuffer不会被多线程共享，这就意味着StringBuffer不会产生线程竞争，所以这里不用StringBuffer
+但是StringBuilder不用类的属性，因为一个对象可能会被多个线程同时访问，所以在属性上就改为StringBuffer
+
+
+
+错误大总结：
+1.在配置h2的数据库时配成了test，test的数据库只会在测试的时候生效
+2.在定义Thing时把文件深度的类型弄错了写成了String类型，单实际上是Integer类型
+
+
+
+
+
+
+
+
 StringBuffer保证了线程安全，不会被多线程共享，
 
