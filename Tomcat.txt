@@ -1,0 +1,48 @@
+
+Tomcat：Web应用服务器
+Tomcat容器，可以Apache公司产品，容器共享数据
+HTML，CSS，JSP（java服务页面），JS
+放入一个目录进行间接访问
+XxxWEB目录
+   WEB-INF---规定的目录
+     Classes----目录   java源文件
+        contact.class
+    Lib  ---第三方jar包
+        javax.servlet-api.jar
+        Dom4j,jar
+
+
+将网站-->文件夹
+ROOT 
+        Index.html--->首页
+
+Tomcat的下载
+   安装版：后缀.exe   .msi
+   压缩版：.zip  -->  解压
+
+目录结构的作用：
+   Linux下tomcat.8.
+
+Tomcat启动方式：Windows操作
+安装目录bin目录
+  Startup.bat  -->启动
+   Shutdown.bat--> 关闭Tomcat
+
+访问Tomcat
+Url:http://localhost:8080
+访问静态资源文件的地址
+http:
+
+
+localhost  :本地域名（企业访问统称doMain）
+顶级域名：com、cn
+二级域名：baidu.com
+三级域名：www.baidu.com
+
+Tomcat启动目录中的bin目录的stratup.bat执行参数
+如果path环境变量如果是普通方式Tomcat会出现闪屏，会启动失败。
+Tomcat里面：变量catalina需要在path中配置环境变量
+
+动态资源：
+页面的源代码可能发生 变化
+ 
