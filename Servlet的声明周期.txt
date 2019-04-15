@@ -1,0 +1,53 @@
+今天内容：
+Servlet的声明周期：
+1.对象创建
+2.初始化（实际开发中，有初始化业务逻辑：一般会使用午餐的init（）方法）
+ init(ServletConfig);
+ init();
+
+3.调用服务方法（处理后台，到底执行doGet（），doPost（））
+
+ Service(ServletRequest,ServletResponse){
+	 根据不同的请求方式:doGet()/doPost();
+ }
+4.销毁
+ destory():销毁
+ 
+ servlet()是一个单实例多线程
+ Servlet的配置对象
+   Servlet的初始化操作
+   
+   
+  d8cbff2ea4e64cc9affbe82eeb5dc2a0 
+   
+   
+   
+   
+   2）作为域对象
+   3)请求转发（页面跳转）
+   
+   面试题：请求转发和重定向的区别？
+   
+   通过案例
+   
+   d8cbff2ea4e64cc9affbe82eeb5dc2a0
+   
+   重定向的过程：
+   1)有两个Request对象
+   
+   
+   
+   会话管理（客户端/服务器交互产生的数据）
+   cookie和session
+   
+   cookie;小饼干，小甜点
+   
+   cookie和session的区别：
+   Cookie存储到浏览器端的，只能String类型的数据，并且存储的数据大小有限制，不能存储敏感数据
+   Session：存储到服务器端的，可以存储任何类型的数据，能存储名数据
+   
+   Cookie是由服务器携带(前两部由服务器做)
+   1.创建一个cookie   Cookie cookie=new Cookie();
+   2.Cookie.addCookie(String key,String value);
+
+   Session可以作为域对象
