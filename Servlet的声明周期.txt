@@ -16,12 +16,7 @@ Servlet的声明周期：
  servlet()是一个单实例多线程
  Servlet的配置对象
    Servlet的初始化操作
-   
-   
-  d8cbff2ea4e64cc9affbe82eeb5dc2a0 
-   
-   
-   
+  
    
    2）作为域对象
    3)请求转发（页面跳转）
@@ -36,7 +31,7 @@ Servlet的声明周期：
    1)有两个Request对象
    
    
-   
+ 
    会话管理（客户端/服务器交互产生的数据）
    cookie和session
    
