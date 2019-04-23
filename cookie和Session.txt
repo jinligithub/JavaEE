@@ -1,0 +1,85 @@
+会话技术
+http协议:无状态请求的会将用户的数据记录下来,从而产生
+Cookie/session数据
+ 在浏览器中访问网站----->所产生的数据
+用户上次访问事件
+用户登录(下次登录,将用户名和密码记住了)
+验证码
+添加购物车---->产生购物车数据
+ 
+  Cookie技术:在浏览器端进行保存
+特点:1)不适合敏感数据(用户登录密码)
+	1. 
+浏览器端存储的cookie数据有限的
+
+
+一个站点的cookie数据量(200-300个)
+	1. 
+通过服务器将cookie数据携带浏览器
+	2. 
+只能存储String类型的数据
+
+
+Cookie的基本使用:
+   Cookie的创建有服务器端创建出来的
+Cookie(String name, String value) :携带cookie的名称,cookie的值
+浏览器端请求某个serlvet的时候,将cookie的数据记录下来
+需要通过服务器携带回去
+
+public void addCookie(Cookie cookie)
+将指定 cookie 添加到响应。可多次调用此方法设置一个以上的 cookie。
+response.addCookie(“name”);
+浏览器中没有cookie(第一次访问)
+添加一个响应头: Set-Cookie:  name=value
+a
+//浏览器端获取cookie数据
+
+public Cookie[] getCookies()
+返回包含客户端随此请求一起发送的所有 Cookie 对象的数组。
+如果没有发送任何 cookie，则此方法返回 null。 return 此请求中包含的所有 Cookie 的数组，如果该请求没有 cookie，则返回 null
+ 
+reqeust.getCookies()------->Cookie[] cookie
+ 需要遍历cookie数据,获取到每一个cookie
+常用的方法:
+String getName()  :获取cookie的名称
+String getValue()  :获取cookie的值
+  
+Cookie内容的过期时间:默认是浏览器关闭的时候,cookie完了!
+setMaxAge(int time):设置cookie的过期时间
+setPath(web application的上下文路径+”/”);
+Servlet请求映射:/a/b/hello
+cookie路径:path: 以”/项目名称开始”,以”/”结束
+Cookie:不能跨浏览器
+Cookie不能存储中文(URLEncoder:编码) :特殊字符
+URLDecoder:解码
+Session技术: 服务器端的会话技术!
+    Session只能用户的私有数据   (依赖于Cookie)
+    Jsessionid=1212323xxx;
+                     标识符
+首先应该将当前用户的Jses sionid获取到 (一个用户信息--->一个Session ID(唯一的)) 
+ 基本使用: HttpSession  request.getSession()/request.getSession(boolea flag)
+ 后者方法:flag-->true:表示创建session对象
+               false:表示获取session对象
+         判断当前用户存在Session信息(id)
+             存在,直接获取当前session对应id---->返回浏览器
+                    如果id存在,直接返回浏览器
+                    如果id不存在,创建sesison,获取id--->返回
+            不存在,创建一个Session,获取到id--->返回浏览器
+Session还可作为域对象去使用:
+    setAttribute(“域的名称String”,数据String/集合(map)) ;
+    getAttribute(“名称”)----->String/map
+  
+Session的生命周期:
+        1)创建Session:getSession()--->获取sesion(一个用户对应一个JSession)
+        2)销毁:
+              a)服务器异常停止运行
+              b)用户登录超时
+       Web.xml    :默认30分钟    public void setMaxInactiveInterval(int interval)
+     <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+应用场景:用户登录之后,退出--->用户的session数据手动删除!
+             c)手动删除session数据public void invalidate()
+Session关闭
+1）
+            
