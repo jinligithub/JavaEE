@@ -1,0 +1,83 @@
+http协议
+  浏览器和服务器之间约定一种数据格式
+http://localhost:8080/hello：URL 是URI的子集
+/hello ：URI   ：请求映射路径(可以指定任意的网络协议)
+请求的时候：
+
+
+GET /hello HTTP/1.1    ---请求行
+请求头：key：value
+Host: localhost:8080
+Connection: keep-alive
+Cache-Control: max-age=0 Upgrade-Insecure-Requests: 1
+ User-Agent: Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36
+Accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8 Accept-Encoding: gzip, deflate, br Accept-Language: zh-CN,zh;q=0.9
+Cookie:Idea-41347d60=cc435e9e-52d8-40ac-ac70-46a820895417;JSESSIONID=0C426983FCA1659F7D55F0DDA963AD3B
+
+Telnet localhost 8080
+ 按照Ctrl+] :输入请求行相关的内容
+请求行：GET /hello HTTP/1.1 
+HTTP/1.1：HTTP协议的版本 ：可以反复请求
+      网页中中3张图片，请求服务器的时候，给服务器发送了几次请求？
+       Xx.html          href
+     Src
+         都会去加载资源文件：就会给服务器发送请求
+HTTP/1.0:只能请求一次，再次请求无效
+/hello：当前请求的后台servlet的路径 ：url-partten
+GET：提交方式--->执行doGet()
+	1. 
+不适合敏感数据的提交,用户信息显示地址栏上
+
+
+          Get方式的实体内容
+   /requestDemo1?name=lisi&password=123456
+2)提交数据大小有限制
+POST：---->执行doPost()
+	1. 
+适合敏感数据提交,不会将用户信息显示地址栏上
+
+
+     Post方式实体内容
+       请求头
+              请求头信息
+          实体内容:name=wangwu&password=123456
+   2)提交数据大小无限制
+请求头:
+    一堆数据:key:value
+  如何获取单个请求头呢?
+       必须通过String类型 subString(int start,int end)截取某个请求头的内容
+非常麻烦:   ----->
+Post方式获取实体内容
+
+
+ //获取流数据
+        InputStream in = request.getInputStream();
+        //ServletInputStream extends InputStream
+        //读数据:一次读取一字节数组
+        byte[] buf = new byte[1024] ;
+        int len = 0 ;
+        while((len=in.read(buf))!=-1){
+            String str = new String(buf,0,len) ;
+            System.out.println(str);
+        }
+        in.close();
+
+常见的请求头
+
+
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:37.0) Gecko/20100101 Firefox/37.0
+指定浏览器的类型
+Referer: http://localhost:8080/testMethod.html :非法链接
+      下载资源,有一些广告页面
+	1. 
+非法链接Referer==null
+	2. 
+没有去执行广告页面  (adv.html)  广告内容[跳转主页下载]
+
+
+
+JDBC
+数据库连接池:
+    C3p0
+    Dbcp
+   Drauid (EE项目中使用连接池)
