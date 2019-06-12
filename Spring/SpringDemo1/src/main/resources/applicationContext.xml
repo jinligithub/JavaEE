@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--Spring 容器   管理对象的生命周期-->
+
+
+    <!--
+    Userinfo user=new UserInfo();
+    相当于该操作有Spring容器来帮着做了
+    userinfo对象创建在堆当中，变量的值放在栈当中
+
+    new出现的时候干了四件事情：
+    1.开辟空间
+    2.初始化成员变量
+    3.调用默认的构造器
+    4.把堆当中的对象赋值给栈当中的引用
+    -->
+
+    <bean id="userInfo" class="com.spring.UserInfo">
+
+        <!--DI 注入-->
+
+        <!--getter setter方法进行注入-->
+        <!--<property name="name" value="Lily"/>-->
+
+        <!--构造方法进行注入-->
+        <!--方法一-->
+        <!--<constructor-arg value="mmmmmm"/>-->
+
+        <!--方法二-->
+        <constructor-arg index="1" type="java.lang.String">
+            <value>1234</value>
+        </constructor-arg>
+
+        <constructor-arg value="ZZZZZ" index="0" type="java.lang.String"/>
+        <constructor-arg value="xi'an" index="2" type="java.lang.String"/>
+
+    </bean>
+
+
+    <!--对象交给Spring进行管理-->
+    <bean id="rectangle_id" class="com.bit.Rectangle">
+        <property name="hight" value="10"/>
+        <property name="width" value="20"/>
+    </bean>
+
+    <bean  id="cycle_id" class="com.bit.Cycle">
+        <!--如果这里没写radius的getter和setter方法就不会有提示-->
+        <property name="radius" value="10"/>
+    </bean>
+
+    <bean id="myCaculate_id" class="com.bit.MyCalculate">
+        <property name="cycle" ref="cycle_id"/>
+        <property name="rectangle" ref="rectangle_id"/>
+    </bean>
+
+
+</beans>
