@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--名称空间-->
+<mapper namespace="com.bit.DAO.UserDao">
+    <!--查询操作
+    id:唯一标识，要和当前接口的方法名一致
+    返回结果：List
+        指定resulType：是当前集合的泛型类型
+    -->
+    <select id="findAll" resultType="com.bit.domain.User">
+        select * from user ;
+        <!--分号可写可不写-->
+    </select>
+</mapper>
+
+<!--&lt;!&ndash;名称空间：&ndash;&gt;-->
+<!--<mapper namespace="com.bit.dao.UserDao">-->
+
+    <!--&lt;!&ndash;查询所有的操作-->
+        <!--id：唯一标识：要和当前接口的方法名一致-->
+        <!--返回结果：-->
+                <!--list-->
+                    <!--指定resultType：是当前集合的泛型的类型-->
+    <!--&ndash;&gt;-->
+    <!--<select id="findAll"  resultType="com.bite.domain.User">-->
+        <!--select * from user ;-->
+    <!--</select>-->
+
+    <!--&lt;!&ndash;保存操作-->
+          <!--属性:parameterType:输入映射 (要和接口方法的参数类型保持一致)-->
+            <!--入参:基本类型/基本类型的包装类类型-->
+                  <!--举例:  int/Integer   (int,INT,java.lang.Integer)-->
+              <!--如果是引用类型:当前类的全路径名称-->
+
+              <!--mybatis支持#{和实体类的属性一致}-->
+    <!--&ndash;&gt;-->
+    <!--<insert id="saveUser"  parameterType="com.bite.domain.User">-->
+        <!--&lt;!&ndash;获取主键自增长的值-->
+            <!--keyProperty:是实体类中的id(要和当前表中主键要映射)-->
+            <!--keyColumn:表中主键名称-->
+            <!--resultType:返回值类型:主键id 一般都是int-->
+            <!--order:什么时候执行selectKey  (插入语句之后,执行selectKey)-->
+        <!--&ndash;&gt;-->
+        <!--<selectKey keyProperty="id" keyColumn="id" resultType="int" order="AFTER">-->
+            <!--SELECT LAST_INSERT_ID() ;-->
+        <!--</selectKey>-->
+
+        <!--insert into user (username,address,sex,birthday) values(#{username},-->
+        <!--#{address},#{sex},#{birthday}) ;-->
+    <!--</insert>-->
+
+    <!--&lt;!&ndash;修改操作&ndash;&gt;-->
+    <!--<update id="updateUser" parameterType="com.bite.domain.User">-->
+        <!--update  user set username = #{username},address=#{address},sex=#{sex},-->
+        <!--birthday=#{birthday} where id = #{id}-->
+    <!--</update>-->
+
+    <!--&lt;!&ndash;-->
+        <!--删除-->
+        <!--如果入参本身就是一个基本类型或者包装类类型-->
+        <!--sql语句#{随便写,建议跟属性名称一致}-->
+    <!--&ndash;&gt;-->
+    <!--<delete id="deleteUser" parameterType="java.lang.Integer">-->
+        <!--delete from user where id = #{uid}-->
+    <!--</delete>-->
+
+    <!--&lt;!&ndash;模糊查询&ndash;&gt;-->
+    <!--<select id="findByName" parameterType="string" resultType="com.bite.domain.User">-->
+        <!--&lt;!&ndash;-->
+          <!--mybatis的sql优化:-->
+
+                <!--mybatis:模糊查询支持:#{} :占位符  (推荐使用)-->
+                                <!--${}:字符串拼接符(不推荐)-->
+        <!--&ndash;&gt;-->
+        <!--select * from user where username like  #{username}-->
+        <!--&lt;!&ndash;select * from user where username like '%${value}%'&ndash;&gt;-->
+    <!--</select>-->
+
+    <!--&lt;!&ndash;&ndash;&gt;-->
+<!--</mapper>-->
